@@ -24,7 +24,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BaseURL", "\"https://app.api.faztbit.pe/api/v1/\"")
+            buildConfigField("String", "BaseURL", "\"https://hn.algolia.com/api/v1/\"")
         }
         create("qa") {
             isMinifyEnabled = false
@@ -32,7 +32,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BaseURL", "\"https://app.api.faztbit.pe/api/v1/\"")
+            buildConfigField("String", "BaseURL", "\"https://hn.algolia.com/api/v1/\"")
         }
         getByName("debug") {
             isMinifyEnabled = false
@@ -40,7 +40,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BaseURL", "\"https://app.api.faztbit.pe/api/v1/\"")
+            buildConfigField("String", "BaseURL", "\"https://hn.algolia.com/api/v1/\"")
         }
     }
     compileOptions {
@@ -64,7 +64,6 @@ dependencies {
     implementation(Dependencies.KotlinLibraries.jsonWebToken)
     implementation(Dependencies.Libraries.logginInterceptor)
     implementation(Dependencies.Libraries.gsonConverter)
-    kapt("org.xerial:sqlite-jdbc:3.34.0")
     implementation(Dependencies.KotlinLibraries.coroutinesCore)
     implementation(Dependencies.KotlinLibraries.coroutinesAndroid)
     testImplementation(Dependencies.KotlinLibraries.coroutinesTest)
