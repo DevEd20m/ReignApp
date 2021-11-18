@@ -2,6 +2,7 @@ package com.faztbit.data.repository
 
 import com.faztbit.data.mapper.MainDataMapper
 import com.faztbit.data.source.database.dataSource.MainDataBaseDataSource
+import com.faztbit.data.source.database.model.HitsRemovedDb
 import com.faztbit.data.source.services.dataSource.MainServiceDataSource
 import com.faztbit.data.utils.ConnectionUtils
 import com.faztbit.domain.models.HitsDomain
@@ -42,6 +43,20 @@ class MainRepositoryImpl(
         return when (val response = database.saveHits(mapper.mapHitsDomainToDb(data))) {
             is Either.Error -> Either.Error(response.error)
             is Either.Success -> Either.Success(Unit)
+        }
+    }
+
+    override suspend fun removeHitsFromDataSource(data: String): Either<Failure, Unit> {
+        return when (val response = database.saveHitsRemoved(HitsRemovedDb(data))) {
+            is Either.Error -> Either.Error(response.error)
+            is Either.Success -> Either.Success(Unit)
+        }
+    }
+
+    override suspend fun getHitsRemoved(): Either<Failure, List<HitsDomain>> {
+        return when (val response = database.getHitsRemoved()) {
+            is Either.Error -> Either.Error(response.error)
+            is Either.Success -> Either.Success(mapper.mapHitsRemovedDbToDomain(response.success))
         }
     }
 
