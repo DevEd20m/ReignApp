@@ -1,5 +1,6 @@
 package com.faztbit.data.source.services.retrofit
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import com.faztbit.domain.utils.Either
 import com.faztbit.domain.utils.Failure
@@ -12,7 +13,6 @@ import javax.net.ssl.SSLException
 import javax.net.ssl.SSLHandshakeException
 
 abstract class BaseClient {
-
     protected suspend inline fun <T> callService(crossinline retrofitCall: suspend () -> Response<T>): Either<Failure, T> {
         return when (true) {
             true -> {
@@ -66,6 +66,7 @@ abstract class BaseClient {
 
     fun parseException(throwable: Throwable): Failure {
         return when (throwable) {
+            is NetworkErrorException -> Failure.NoNetworkDetected
             is SocketTimeoutException -> Failure.TimeOut
             is SSLException -> Failure.NetworkConnectionLostSuddenly
             is SSLHandshakeException -> Failure.SSLError

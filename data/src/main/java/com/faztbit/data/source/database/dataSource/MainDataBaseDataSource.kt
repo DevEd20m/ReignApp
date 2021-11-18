@@ -7,4 +7,6 @@ import com.faztbit.domain.utils.Failure
 interface MainDataBaseDataSource {
 
     suspend fun getHitsSaved(): Either<Failure, List<HitsDb>>
+
+    suspend fun saveHits(data: List<HitsDb>): Either<Failure, Unit>
 }
