@@ -14,5 +14,4 @@ class MainServiceDataSourceImpl(
         callService {
             endPoints.fetchHitsByQuery(query)
         }
-
 }

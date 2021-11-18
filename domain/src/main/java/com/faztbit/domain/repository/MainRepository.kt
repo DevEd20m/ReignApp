@@ -6,4 +6,5 @@ import com.faztbit.domain.utils.Failure
 
 interface MainRepository {
     suspend fun fetchHitsByQuery(query:String?): Either<Failure, List<HitsDomain>>
+    suspend fun getHitsSaved(query:String?): Either<Failure, List<HitsDomain>>
 }

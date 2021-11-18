@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -15,6 +17,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFile("consumer-rules.pro")
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -66,6 +77,14 @@ dependencies {
     implementation(Dependencies.Libraries.gsonConverter)
     implementation(Dependencies.KotlinLibraries.coroutinesCore)
     implementation(Dependencies.KotlinLibraries.coroutinesAndroid)
+    implementation (Dependencies.Libraries.roomDataBaseRun){
+        exclude(group = "org.xerial")
+    }
+    kapt (Dependencies.Libraries.roomDataBaseCompiler){
+        exclude(group = "org.xerial")
+    }
+    annotationProcessor (Dependencies.Libraries.roomDataBaseCompiler)
+    implementation (Dependencies.Libraries.roomDataBaseCoroutines)
     testImplementation(Dependencies.KotlinLibraries.coroutinesTest)
     testImplementation(Dependencies.Libraries.koinTest)
     testImplementation(Dependencies.TestLibraries.androidXcore)

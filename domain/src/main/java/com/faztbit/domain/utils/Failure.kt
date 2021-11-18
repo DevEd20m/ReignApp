@@ -16,6 +16,8 @@ sealed class Failure {
 
     object SSLError : Failure()
 
+    open class DataBaseError(val message: String?) : Failure()
+
     /** When service is taking to long on return the response.*/
     object TimeOut : Failure()
 
