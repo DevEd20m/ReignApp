@@ -59,8 +59,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+        exclude("META-INF/atomicfu.kotlin_module")
+    }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -83,6 +87,7 @@ dependencies {
     kapt (Dependencies.Libraries.roomDataBaseCompiler){
         exclude(group = "org.xerial")
     }
+    kapt ("org.xerial:sqlite-jdbc:3.34.0")
     annotationProcessor (Dependencies.Libraries.roomDataBaseCompiler)
     implementation (Dependencies.Libraries.roomDataBaseCoroutines)
     testImplementation(Dependencies.KotlinLibraries.coroutinesTest)

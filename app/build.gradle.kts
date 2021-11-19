@@ -61,8 +61,6 @@ android {
 }
 
 dependencies {
-    implementation(project(ConfigGradle.Module.domain))
-    implementation(project(ConfigGradle.Module.data))
     implementation(fileTree("libs") { include(listOf("*.jar")) })
     implementation(Dependencies.KotlinLibraries.kotlin)
     implementation(Dependencies.AndroidLibraries.appCompat)
@@ -79,6 +77,8 @@ dependencies {
     implementation(Dependencies.AndroidLibraries.fragment)
     implementation(Dependencies.AndroidLibraries.recycler)
     implementation(Dependencies.AndroidLibraries.activity)
+    implementation(project(ConfigGradle.Module.domain))
+    implementation(project(ConfigGradle.Module.data))
     testImplementation(Dependencies.Libraries.koinTest)
     testImplementation(Dependencies.TestLibraries.jUnit)
     testImplementation(Dependencies.TestLibraries.androidJUnit)

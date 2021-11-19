@@ -9,5 +9,5 @@ import org.koin.dsl.module
 
 val dataSourceModule = module {
     single<MainServiceDataSource> { MainServiceDataSourceImpl(get()) }
-    single<MainDataBaseDataSource> { MainDataBaseDataSourceImpl(get()) }
+    single<MainDataBaseDataSource> { MainDataBaseDataSourceImpl(get(),get()) }
 }

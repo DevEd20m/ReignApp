@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class HitsDb(
     @ColumnInfo(name = "objectId")
     @PrimaryKey
-    val objectId: String?,
+    val objectId: String,
     @ColumnInfo(name = "title")
     val title: String?,
     @ColumnInfo(name = "author")

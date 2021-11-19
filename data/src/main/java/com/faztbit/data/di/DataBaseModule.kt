@@ -1,28 +1,22 @@
 package com.faztbit.data.di
 
-import android.app.Application
-import androidx.room.Room
-import com.faztbit.data.source.database.ReignDataBase
-import com.faztbit.data.source.database.dao.HitsDao
-import com.faztbit.data.source.database.dao.HitsRemovedDao
+import com.faztbit.data.source.database.ReignDataBaseObject
 import org.koin.android.ext.koin.androidApplication
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val dataBaseModule = module {
-    fun provideDatabase(application: Application): ReignDataBase {
-        return Room.databaseBuilder(application, ReignDataBase::class.java, "ReignDataBase")
-            .fallbackToDestructiveMigration()
-            .build()
+    single {
+        ReignDataBaseObject.provideLocalDataBase(
+            androidApplication(),
+            //get(named("Migration"))
+        )
     }
-
-    fun provideHitsRemovedDao(database: ReignDataBase): HitsRemovedDao {
-        return database.hitsRemovedDao()
+    //Dao
+    single {
+        ReignDataBaseObject.provideStatsManagementDao(get())
     }
-
-    fun provideHitsDao(database: ReignDataBase): HitsDao {
-        return database.hitsDao()
+    single {
+        ReignDataBaseObject.provideScheduledVisitDao(get())
     }
-    single { provideDatabase(androidApplication()) }
-    single { provideHitsDao(get()) }
-    single { provideHitsRemovedDao(get()) }
 }
