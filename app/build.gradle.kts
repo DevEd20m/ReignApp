@@ -59,7 +59,16 @@ android {
         dataBinding = true
     }
 
-//    apply(from = "${rootProject.projectDir}/bitriseVariants.gradle")
+    applicationVariants.all {
+        val variant = this
+        variant.outputs
+            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val outputFileName = "app-${variant.buildType.name}_reignAPP_VC${defaultConfig.versionCode}_${defaultConfig.versionName}_.apk"
+                println("OutputFileName: $outputFileName")
+                output.outputFileName = outputFileName
+            }
+    }
 }
 
 dependencies {
