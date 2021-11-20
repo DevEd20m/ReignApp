@@ -59,7 +59,7 @@ android {
         dataBinding = true
     }
 
-    apply(from = "${rootProject.projectDir}/bitriseVariant.gradle")
+//    apply(from = "${rootProject.projectDir}/bitriseVariants.gradle")
 }
 
 dependencies {
