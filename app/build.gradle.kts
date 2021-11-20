@@ -83,6 +83,7 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     testImplementation(Dependencies.Libraries.koinTest)
+    testImplementation(Dependencies.KotlinLibraries.coroutinesTest)
     testImplementation(Dependencies.TestLibraries.jUnit)
     testImplementation(Dependencies.TestLibraries.androidJUnit)
     testImplementation(Dependencies.TestLibraries.androidXcore)
