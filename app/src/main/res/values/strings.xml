@@ -12,4 +12,6 @@
     <string name="string_year">Años</string>
     <string name="string_month">Meses</string>
     <string name="string_week">Semanas</string>
+    <string name="string_error_system">No fue posible completar la solicitud por un error de sistema</string>
+    <string name="string_try_again">Intentar nuevamente</string>
 </resources>

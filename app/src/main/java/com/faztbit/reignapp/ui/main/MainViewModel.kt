@@ -1,6 +1,5 @@
 package com.faztbit.reignapp.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,8 @@ import com.faztbit.domain.usecase.FetchHitsRemovedUseCase
 import com.faztbit.domain.usecase.FetchHitsUseCase
 import com.faztbit.domain.usecase.RemoveHitsUseCase
 import com.faztbit.domain.utils.Failure
+import com.faztbit.reignapp.utils.Constant
+import com.faztbit.reignapp.utils.Event
 
 class MainViewModel(
     private val fetchHitsRemovedUseCase: FetchHitsRemovedUseCase,
@@ -22,6 +23,8 @@ class MainViewModel(
 
     private val _listHits = MutableLiveData<List<HitsDomain>>()
     val listHits: LiveData<List<HitsDomain>> = _listHits
+
+    val messageError = MutableLiveData<Event<String>>()
 
     val isRefreshData = MutableLiveData<Boolean>()
 
@@ -71,29 +74,31 @@ class MainViewModel(
         isRefreshData.value = false
         val listRemoved = _listRemoved.value?.toList()
         listRemoved?.let { listNotNull ->
-            _listHits.value = data.filter { it.objectId !in listNotNull.map { item -> item.objectId } }
+            _listHits.value =
+                data.filter { it.objectId !in listNotNull.map { item -> item.objectId } }
         }
-
-/*        val listFiltered: List<HitsDomain> =
-            data.toSet().minus(listRemoved?.toSet()).toList() as List<HitsDomain>*/
 
     }
 
 
     private fun handleUseCaseFailureFromBase(failure: Failure) {
         when (failure) {
-            is Failure.DataBaseError -> Log.e("EDMUNDO", failure.message.toString())
-            is Failure.DataToDomainMapperFailure -> Log.e("EDMUNDO", failure.toString())
-            is Failure.DomainToPresentationMapperFailure -> Log.e("EDMUNDO", failure.toString())
-            is Failure.ErrorNotMapped -> Log.e("EDMUNDO", failure.toString())
-            is Failure.ErrorServerNotMapped -> Log.e("EDMUNDO", failure.message.toString())
-            Failure.NetworkConnectionLostSuddenly -> Log.e("EDMUNDO", failure.toString())
-            Failure.NoNetworkDetected -> Log.e("EDMUNDO", failure.toString())
-            is Failure.ResourceNotFound -> Log.e("EDMUNDO", failure.toString())
-            Failure.SSLError -> Log.e("EDMUNDO", failure.toString())
-            is Failure.ServerError -> Log.e("EDMUNDO", failure.message.toString())
-            is Failure.ServiceUncaughtFailure -> Log.e("EDMUNDO", failure.toString())
-            Failure.TimeOut -> Log.e("EDMUNDO", failure.toString())
+            is Failure.DataBaseError -> showErrorCauseWithMessage(Constant.ERROR_DATABASE)
+            is Failure.DataToDomainMapperFailure -> showErrorCauseWithMessage(Constant.ERROR_SSL)
+            is Failure.DomainToPresentationMapperFailure -> showErrorCauseWithMessage(Constant.ERROR_MAPPER_DOMAIN)
+            is Failure.ErrorNotMapped -> showErrorCauseWithMessage(Constant.ERROR_NOT_MAPPED)
+            is Failure.ErrorServerNotMapped -> showErrorCauseWithMessage(Constant.ERROR_NOT_MAPPED)
+            Failure.NetworkConnectionLostSuddenly -> showErrorCauseWithMessage(Constant.ERROR_NETWORK_LOW)
+            Failure.NoNetworkDetected -> showErrorCauseWithMessage(Constant.ERROR_NOT_NETWORK)
+            is Failure.ResourceNotFound -> showErrorCauseWithMessage(Constant.ERROR_NOT_FOUND)
+            Failure.SSLError -> showErrorCauseWithMessage(Constant.ERROR_SSL)
+            is Failure.ServerError -> showErrorCauseWithMessage(Constant.ERROR_SERVER)
+            is Failure.ServiceUncaughtFailure -> showErrorCauseWithMessage(Constant.ERROR_SERVER)
+            Failure.TimeOut -> showErrorCauseWithMessage(Constant.ERROR_TIMEOUT)
         }
+    }
+
+    protected fun showErrorCauseWithMessage(message: String) {
+        messageError.value = Event(message)
     }
 }

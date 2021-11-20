@@ -1,5 +1,6 @@
 package com.faztbit.reignapp.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +12,11 @@ import com.faztbit.reignapp.BR
 import com.faztbit.reignapp.R
 import com.faztbit.reignapp.databinding.ActivityMainBinding
 import com.faztbit.reignapp.ui.detail.DetailActivity
+import com.faztbit.reignapp.ui.dialog.GeneralErrorDialog
 import com.faztbit.reignapp.ui.main.adapter.ItemTouchHelperCallback
 import com.faztbit.reignapp.ui.main.adapter.ViewAdapter
+import com.faztbit.reignapp.utils.Constant
+import com.faztbit.reignapp.utils.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -42,9 +46,31 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewHits.addItemDecoration(divider)
     }
 
+    override fun onStart() {
+        super.onStart()
+        setUpObserver()
+    }
+
+    private fun setUpObserver() {
+        mainViewModel.messageError.observe(this, EventObserver {
+            handleDialogServerErrorWithMessage(it)
+        })
+    }
+
     private fun gonnaToDetail(data: HitsDomain) {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("url", data.url)
         startActivity(intent)
+    }
+
+    @SuppressLint("RestrictedApi")
+    fun handleDialogServerErrorWithMessage(message: String?) {
+        val dialog = GeneralErrorDialog()
+        if (!dialog.isVisible) {
+            val args = Bundle()
+            args.putString("message", message)
+            dialog.arguments = args
+            dialog.show(supportFragmentManager, Constant.DIALOG)
+        }
     }
 }
