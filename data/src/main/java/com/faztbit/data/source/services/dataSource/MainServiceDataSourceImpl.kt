@@ -3,6 +3,7 @@ package com.faztbit.data.source.services.dataSource
 import com.faztbit.data.source.services.response.HitsHeaderResponse
 import com.faztbit.data.source.services.retrofit.BaseClient
 import com.faztbit.data.source.services.retrofit.EndPoints
+import com.faztbit.data.utils.ConnectionUtils
 import com.faztbit.domain.utils.Either
 import com.faztbit.domain.utils.Failure
 

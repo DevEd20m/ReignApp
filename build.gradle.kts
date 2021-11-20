@@ -2,7 +2,7 @@
 buildscript {
     repositories {
         google()
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20")
@@ -17,6 +17,7 @@ allprojects {
         google()
         jcenter()
     }
+    apply(from = "${rootProject.projectDir}/bitrise.gradle")
 }
 
 tasks.register("clean", Delete::class) {
