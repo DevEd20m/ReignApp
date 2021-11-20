@@ -8,14 +8,24 @@ import com.faztbit.domain.models.HitsDomain
 import com.faztbit.reignapp.R
 import java.util.*
 
-class ViewAdapter(private val listener: (HitsDomain) -> Unit) :
+class ViewAdapter(
+    private val listenerDetail: (HitsDomain) -> Unit,
+    private val listenerDelete: (HitsDomain) -> Unit
+) :
     RecyclerView.Adapter<ItemViewHolder>(),
     ItemTouchHelperCallback.ItemTouchHelperAdapter {
 
     var items: MutableList<HitsDomain> = arrayListOf()
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) =
-        holder.bind(items[position])
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val item = items[position]
+        holder.bind(item)
+
+        holder.itemView.setOnClickListener {
+            listenerDetail.invoke(item)
+        }
+    }
+
 
     override fun getItemCount(): Int = items.size
 
@@ -28,7 +38,7 @@ class ViewAdapter(private val listener: (HitsDomain) -> Unit) :
     override fun onItemDismiss(position: Int) = deleteItem(position)
 
     private fun deleteItem(position: Int) {
-        listener.invoke(items[position])
+        listenerDelete.invoke(items[position])
         items.removeAt(position)
         notifyItemRemoved(position)
     }

@@ -14,5 +14,7 @@ data class HitsRemovedDb(
     @ColumnInfo(name = "author")
     val author: String?,
     @ColumnInfo(name = "createAt")
-    val createAt: String?
+    val createAt: String?,
+    @ColumnInfo(name = "url")
+    val url: String?
 )

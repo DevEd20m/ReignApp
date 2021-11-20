@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ReignApp</string>
     <string name="string_delete">Eliminar</string>
+    <string name="string_error">Ocurrió un error</string>
 </resources>

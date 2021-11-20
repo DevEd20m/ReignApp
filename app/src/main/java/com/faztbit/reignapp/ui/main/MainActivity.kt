@@ -1,13 +1,16 @@
 package com.faztbit.reignapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.faztbit.domain.models.HitsDomain
 import com.faztbit.reignapp.BR
 import com.faztbit.reignapp.R
 import com.faztbit.reignapp.databinding.ActivityMainBinding
+import com.faztbit.reignapp.ui.detail.DetailActivity
 import com.faztbit.reignapp.ui.main.adapter.ItemTouchHelperCallback
 import com.faztbit.reignapp.ui.main.adapter.ViewAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
-    private val adapter by lazy { ViewAdapter(mainViewModel::deleteHits) }
+    private val adapter by lazy { ViewAdapter(::gonnaToDetail, mainViewModel::deleteHits) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,5 +40,11 @@ class MainActivity : AppCompatActivity() {
         touchHelper.attachToRecyclerView(binding.recyclerViewHits)
         val divider = DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
         binding.recyclerViewHits.addItemDecoration(divider)
+    }
+
+    private fun gonnaToDetail(data: HitsDomain) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("url", data.url)
+        startActivity(intent)
     }
 }

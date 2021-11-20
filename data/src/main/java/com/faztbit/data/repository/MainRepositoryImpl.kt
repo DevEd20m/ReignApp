@@ -52,7 +52,7 @@ class MainRepositoryImpl(
                 data.objectId,
                 data.title,
                 data.author,
-                data.createAt
+                data.createAt, data.url
             )
         )) {
             is Either.Error -> Either.Error(response.error)

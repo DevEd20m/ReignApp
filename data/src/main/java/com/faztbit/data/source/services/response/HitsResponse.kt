@@ -16,5 +16,7 @@ data class HitsMainResponse(
     @SerializedName("author")
     val author: String?,
     @SerializedName("created_at")
-    val createAt: String?
+    val createAt: String?,
+    @SerializedName("story_url")
+    val url: String?
 )
