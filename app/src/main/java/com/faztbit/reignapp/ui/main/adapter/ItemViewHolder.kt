@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.faztbit.domain.models.HitsDomain
 import com.faztbit.reignapp.R
+import com.faztbit.reignapp.ui.databinding.changeFormatDateTime
 
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -18,7 +19,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             textViewTitle.text = data.title
             textViewNameClient.text = data.author
             textViewCreateAt.isVisible = true
-            textViewCreateAt.text = data.createAt
+            data.createAt?.let { textViewCreateAt.changeFormatDateTime(it) }
 
 
         }

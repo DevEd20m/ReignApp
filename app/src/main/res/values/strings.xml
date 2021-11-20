@@ -2,4 +2,14 @@
     <string name="app_name">ReignApp</string>
     <string name="string_delete">Eliminar</string>
     <string name="string_error">Ocurrió un error</string>
+
+    <string name="string_ago">atras</string>
+    <string name="string_recently_ago">Hace un momento.</string>
+    <string name="string_seconds">Segundos</string>
+    <string name="string_minutes">Minutos</string>
+    <string name="string_hour">Horas</string>
+    <string name="string_day">Dias</string>
+    <string name="string_year">Años</string>
+    <string name="string_month">Meses</string>
+    <string name="string_week">Semanas</string>
 </resources>
