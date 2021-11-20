@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -57,11 +58,20 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    applicationVariants.all {
+        val variant = this
+        variant.outputs
+            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+            .forEach { output ->
+                val outputFileName = "app-${variant.buildType.name}_reignAPP_VC${defaultConfig.versionCode}_${defaultConfig.versionName}_.apk"
+                println("OutputFileName: $outputFileName")
+                output.outputFileName = outputFileName
+            }
+    }
 }
 
 dependencies {
-    implementation(project(ConfigGradle.Module.domain))
-    implementation(project(ConfigGradle.Module.data))
     implementation(fileTree("libs") { include(listOf("*.jar")) })
     implementation(Dependencies.KotlinLibraries.kotlin)
     implementation(Dependencies.AndroidLibraries.appCompat)
@@ -78,9 +88,14 @@ dependencies {
     implementation(Dependencies.AndroidLibraries.fragment)
     implementation(Dependencies.AndroidLibraries.recycler)
     implementation(Dependencies.AndroidLibraries.activity)
+    implementation(project(ConfigGradle.Module.domain))
+    implementation(project(ConfigGradle.Module.data))
     testImplementation(Dependencies.Libraries.koinTest)
+    testImplementation(Dependencies.KotlinLibraries.coroutinesTest)
     testImplementation(Dependencies.TestLibraries.jUnit)
     testImplementation(Dependencies.TestLibraries.androidJUnit)
+    testImplementation(Dependencies.TestLibraries.mockito)
+    testImplementation(Dependencies.TestLibraries.mockitoInline)
     testImplementation(Dependencies.TestLibraries.androidXcore)
     androidTestImplementation(Dependencies.TestLibraries.espresso)
 }

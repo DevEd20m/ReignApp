@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -15,6 +17,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFile("consumer-rules.pro")
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -24,7 +35,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BaseURL", "\"https://app.api.faztbit.pe/api/v1/\"")
+            buildConfigField("String", "BaseURL", "\"https://hn.algolia.com/api/v1/\"")
         }
         create("qa") {
             isMinifyEnabled = false
@@ -32,7 +43,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BaseURL", "\"https://app.api.faztbit.pe/api/v1/\"")
+            buildConfigField("String", "BaseURL", "\"https://hn.algolia.com/api/v1/\"")
         }
         getByName("debug") {
             isMinifyEnabled = false
@@ -40,7 +51,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BaseURL", "\"https://app.api.faztbit.pe/api/v1/\"")
+            buildConfigField("String", "BaseURL", "\"https://hn.algolia.com/api/v1/\"")
         }
     }
     compileOptions {
@@ -48,8 +59,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+        exclude("META-INF/atomicfu.kotlin_module")
+    }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -64,10 +79,21 @@ dependencies {
     implementation(Dependencies.KotlinLibraries.jsonWebToken)
     implementation(Dependencies.Libraries.logginInterceptor)
     implementation(Dependencies.Libraries.gsonConverter)
-    kapt("org.xerial:sqlite-jdbc:3.34.0")
     implementation(Dependencies.KotlinLibraries.coroutinesCore)
     implementation(Dependencies.KotlinLibraries.coroutinesAndroid)
+    implementation (Dependencies.Libraries.roomDataBaseRun){
+        exclude(group = "org.xerial")
+    }
+    kapt (Dependencies.Libraries.roomDataBaseCompiler){
+        exclude(group = "org.xerial")
+    }
+    kapt ("org.xerial:sqlite-jdbc:3.34.0")
+    annotationProcessor (Dependencies.Libraries.roomDataBaseCompiler)
+    implementation (Dependencies.Libraries.roomDataBaseCoroutines)
     testImplementation(Dependencies.KotlinLibraries.coroutinesTest)
+    testImplementation(Dependencies.TestLibraries.mockito)
+    testImplementation(Dependencies.TestLibraries.mockitoCore)
+    testImplementation(Dependencies.TestLibraries.mockitoInline)
     testImplementation(Dependencies.Libraries.koinTest)
     testImplementation(Dependencies.TestLibraries.androidXcore)
     testImplementation(Dependencies.TestLibraries.jsonForJVM)
