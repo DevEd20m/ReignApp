@@ -17,6 +17,7 @@ allprojects {
         google()
         jcenter()
     }
+    apply(from = "${rootProject.projectDir}/bitrise.gradle")
 }
 
 tasks.register("clean", Delete::class) {

@@ -1,0 +1,8 @@
+applicationVariants.all{ variant ->
+    def outputName = "app-${variant.buildType.name}_reignAPP_VC${defaultConfig.versionCode}_${defaultConfig.versionName}_.apk"
+
+    variant.outputs.all{ output->
+        outputFileName = outputName
+    }
+
+}

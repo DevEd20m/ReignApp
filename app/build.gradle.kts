@@ -58,6 +58,8 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    apply(from = "${rootProject.projectDir}/bitriseVariant.gradle")
 }
 
 dependencies {
