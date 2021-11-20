@@ -22,7 +22,6 @@ class MainAdapter(private val listener: (HitsDomain) -> Unit) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
-        holder.dataBinding.item = item
         holder.itemView.setOnClickListener {
             listener.invoke(item)
         }

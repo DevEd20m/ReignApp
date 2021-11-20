@@ -76,7 +76,6 @@ dependencies {
     implementation(Dependencies.AndroidLibraries.navigationUi)
     implementation(Dependencies.AndroidLibraries.fragment)
     implementation(Dependencies.AndroidLibraries.recycler)
-    implementation(Dependencies.AndroidLibraries.recyclerDecorator)
     implementation(Dependencies.AndroidLibraries.activity)
     implementation(project(ConfigGradle.Module.domain))
     implementation(project(ConfigGradle.Module.data))

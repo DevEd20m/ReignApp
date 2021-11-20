@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.faztbit.domain.models.HitsDomain
 import com.faztbit.domain.usecase.FetchHitsRemovedUseCase
 import com.faztbit.domain.usecase.FetchHitsUseCase
+import com.faztbit.domain.usecase.RemoveHitsUseCase
 import com.faztbit.domain.utils.Failure
 
 class MainViewModel(
     private val fetchHitsRemovedUseCase: FetchHitsRemovedUseCase,
     private val fetchHitsUseCase: FetchHitsUseCase,
-    private val removedUseCase: FetchHitsRemovedUseCase
-) : ViewModel() {
+    private val removedUseCase: RemoveHitsUseCase,
+
+    ) : ViewModel() {
 
     private val _listHits = MutableLiveData<List<HitsDomain>>()
     val listHits: LiveData<List<HitsDomain>> = _listHits
@@ -31,6 +33,19 @@ class MainViewModel(
                 handleFetchHitsUseCaseSuccess(data)
             }
         }
+    }
+
+
+    fun deleteHits(hit: HitsDomain) {
+        removedUseCase.invoke(viewModelScope, hit.objectId) {
+            it.either(::handleUseCaseFailureFromBase) { data ->
+                handleRemoveHitsUseCaseSuccess(data)
+            }
+        }
+    }
+
+    private fun handleRemoveHitsUseCaseSuccess(data: Unit) {
+        executeGetDetailEnterprise()
     }
 
     private fun handleFetchHitsUseCaseSuccess(data: List<HitsDomain>) {
