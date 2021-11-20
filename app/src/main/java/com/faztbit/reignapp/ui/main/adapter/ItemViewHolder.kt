@@ -15,7 +15,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(data: HitsDomain) =
         with(itemView) {
-            textViewTitle.text = "dsdsdsd"
+            textViewTitle.text = data.title
             textViewNameClient.text = data.author
             textViewCreateAt.isVisible = true
             textViewCreateAt.text = data.createAt

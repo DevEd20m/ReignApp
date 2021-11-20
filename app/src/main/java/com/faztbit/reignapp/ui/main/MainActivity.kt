@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
-    private val adapter by lazy { ViewAdapter() }
+    private val adapter by lazy { ViewAdapter(mainViewModel::deleteHits) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,6 +7,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "HitsRemoved")
 data class HitsRemovedDb(
     @PrimaryKey
-    @ColumnInfo(name = "Id")
-    val id: String
+    @ColumnInfo(name = "objectId")
+    val objectId: String,
+    @ColumnInfo(name = "title")
+    val title: String?,
+    @ColumnInfo(name = "author")
+    val author: String?,
+    @ColumnInfo(name = "createAt")
+    val createAt: String?
 )

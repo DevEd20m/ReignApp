@@ -26,7 +26,7 @@ class MainDataMapperImpl : MainDataMapper {
 
     override suspend fun mapHitsRemovedDbToDomain(response: List<HitsRemovedDb>): List<HitsDomain> {
         return response.map {
-            HitsDomain(it.id, null, null, null)
+            HitsDomain(it.objectId, it.title, it.author, it.createAt)
         }
     }
 

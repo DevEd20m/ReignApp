@@ -8,7 +8,7 @@ import com.faztbit.domain.models.HitsDomain
 import com.faztbit.reignapp.R
 import java.util.*
 
-class ViewAdapter :
+class ViewAdapter(private val listener: (HitsDomain) -> Unit) :
     RecyclerView.Adapter<ItemViewHolder>(),
     ItemTouchHelperCallback.ItemTouchHelperAdapter {
 
@@ -28,6 +28,7 @@ class ViewAdapter :
     override fun onItemDismiss(position: Int) = deleteItem(position)
 
     private fun deleteItem(position: Int) {
+        listener.invoke(items[position])
         items.removeAt(position)
         notifyItemRemoved(position)
     }

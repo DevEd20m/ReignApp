@@ -11,7 +11,7 @@ data class HitsHeaderResponse(
 data class HitsMainResponse(
     @SerializedName("objectID")
     val objectId: String,
-    @SerializedName("title")
+    @SerializedName("story_title")
     val title: String?,
     @SerializedName("author")
     val author: String?,

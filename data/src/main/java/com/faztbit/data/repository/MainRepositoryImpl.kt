@@ -46,8 +46,15 @@ class MainRepositoryImpl(
         }
     }
 
-    override suspend fun removeHitsFromDataSource(data: String): Either<Failure, Unit> {
-        return when (val response = database.saveHitsRemoved(HitsRemovedDb(data))) {
+    override suspend fun removeHitsFromDataSource(data: HitsDomain): Either<Failure, Unit> {
+        return when (val response = database.saveHitsRemoved(
+            HitsRemovedDb(
+                data.objectId,
+                data.title,
+                data.author,
+                data.createAt
+            )
+        )) {
             is Either.Error -> Either.Error(response.error)
             is Either.Success -> Either.Success(Unit)
         }

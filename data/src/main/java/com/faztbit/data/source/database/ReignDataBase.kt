@@ -22,6 +22,7 @@ object ReignDataBaseObject {
         applicationContext: Application,
     ): ReignDataBase {
         return Room.databaseBuilder(applicationContext, ReignDataBase::class.java, "BaseDb")
+            .fallbackToDestructiveMigration()
             //.addMigrations(*migrations.toTypedArray())
             .build()
     }
