@@ -1,32 +1,34 @@
-ext {
-    referenceVersionCode =  1
-    referenceVersionName =  "1.0.0"
+project.afterEvaluate {
+    ext {
+        referenceVersionCode =  1
+        referenceVersionName =  "1.0.0"
 
-    getCustomerVersionName = { referenceVersionName ->
-        def finalVersionName = referenceVersionName
-        def bitriseBuild = System.getenv()["BITRISE_BUILD"]
+        getCustomerVersionName = { referenceVersionName ->
+            def finalVersionName = referenceVersionName
+            def bitriseBuild = System.getenv()["BITRISE_BUILD"]
 
-        if(bitriseBuild){
-            def buildNumber = System.getenv()["BITRISE_BUILD_NUMBER"]
-            finalVersionName = finalVersionName + "." + buildNumber
-        } else {
-            finalVersionName = finalVersionName + ".LOCAL"
+            if(bitriseBuild){
+                def buildNumber = System.getenv()["BITRISE_BUILD_NUMBER"]
+                finalVersionName = finalVersionName + "." + buildNumber
+            } else {
+                finalVersionName = finalVersionName + ".LOCAL"
+            }
+
+            return finalVersionName
         }
 
-        return finalVersionName
-    }
+        getCustomerVersionCode = { referenceVersionCode ->
+            def referenceVersionMultiplier = 1000
+            def finalVersionCode = referenceVersionCode * referenceVersionMultiplier
 
-    getCustomerVersionCode = { referenceVersionCode ->
-        def referenceVersionMultiplier = 1000
-        def finalVersionCode = referenceVersionCode * referenceVersionMultiplier
+            def bitriseBuild = System.getenv()["BITRISE_BUILD"]
 
-        def bitriseBuild = System.getenv()["BITRISE_BUILD"]
+            if(bitriseBuild){
+                def buildNumber = System.getenv()["BITRISE_BUILD_NUMBER"]
+                finalVersionCode = finalVersionCode + Integer.valueOf(buildNumber)
+            }
 
-        if(bitriseBuild){
-            def buildNumber = System.getenv()["BITRISE_BUILD_NUMBER"]
-            finalVersionCode = finalVersionCode + Integer.valueOf(buildNumber)
+            return finalVersionCode
         }
-
-        return finalVersionCode
     }
 }
