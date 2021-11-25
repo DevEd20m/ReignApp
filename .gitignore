@@ -15,8 +15,6 @@
 local.properties
 
 /buildSrc/build
-buildSrc
-buildSrc/
 /buildSrc/.gradle
 .idea
 
